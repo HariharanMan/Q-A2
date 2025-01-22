@@ -31,12 +31,20 @@
     <div class="container py-5">
         <div class="row">
             <div class="col-md-8 offset-2">
-                <div class="input-group">
-                    <input type="text" class="form-control form-control-lg" placeholder="Search for questions..." />
-                    <div class="input-group-append">
-                        <button class="btn btn-dark btn-lg" type="button">Search</button>
+                <form method="GET" action="">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            name="q"
+                            class="form-control form-control-lg"
+                            placeholder="Search for questions..."
+                            value="{{ search_query }}"
+                        />
+                        <div class="input-group-append">
+                            <button class="btn btn-dark btn-lg" type="submit">Search</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -55,17 +63,25 @@
                 </p>
             </div>
         </div>
+        {% empty %}
+        <p class="text-center text-muted">No questions found.</p>
         {% endfor %}
     </div>
 
     <!-- Pagination -->
     <nav class="container">
         <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            {% if questions.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ questions.previous_page_number }}&q={{ search_query }}">Previous</a></li>
+            {% endif %}
+            {% for num in questions.paginator.page_range %}
+            <li class="page-item {% if questions.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}&q={{ search_query }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+            {% if questions.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ questions.next_page_number }}&q={{ search_query }}">Next</a></li>
+            {% endif %}
         </ul>
     </nav>
 </body>

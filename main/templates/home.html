@@ -9,29 +9,59 @@
     <link rel="stylesheet" href="{% static 'bootstrap.min.css'%}"/>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Questions</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Tags</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Ask</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+              </li>          
+            </ul>
+          </div>
+        </nav>
+        <!--Search Section-->
+        <div class="container py-5">
+          <div class="row">
+            <div class="col-md-8 offset-2">
+              <div class="input-group">
+                <input type="text" class="form-control form-control-lg" placeholder="Search" />
+                <div class="input-group-append">
+                  <button class="btn btn-dark btn-lg" type="button" id="button-addon2">Search</button>
+                </div>
+              </div>
+            </div>
+          </div>  
         </div>
-      </nav>
-    </div>
+      </div> 
+      <!--Question List-->
+      <div class="container">
+        <div class ="card">
+          <div class="card-body">
+            <h4 class="card-title">Question</h4>
+            <p class="card-text">Question Detail</p>
+            <p>
+              <a href="#" class="mr-3 ">Hari</a>
+              <a href="#" class="mr-3 ">5 Answers</a>
+              <a href="#" class="mr-3 ">10 Comments</a>
+            </p>
+          </div>
+        </div>
+      </div>
 </body>
 </html>

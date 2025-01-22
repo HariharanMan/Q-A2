@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Question Page</title>
     <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
     <script>
@@ -24,7 +24,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="Questions/">Questions</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Tags</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Ask</a></li>
@@ -47,16 +47,7 @@
                             placeholder="Search for questions..."
                             value="{{ search_query }}"
                         />
-                        <select
-                            name="domain"
-                            class="form-control form-control-lg"
-                            onchange="this.form.submit()"
-                        >
-                            <option value="">All Domains</option>
-                            {% for domain in domains %}
-                            <option value="{{ domain }}" {% if domain == domain_filter %}selected{% endif %}>{{ domain }}</option>
-                            {% endfor %}
-                        </select>
+                        
                         <div class="input-group-append">
                             <button class="btn btn-dark btn-lg" type="submit">Search</button>
                         </div>
@@ -71,10 +62,7 @@
         {% for question in questions %}
         <div class="card mb-4 shadow-sm">
             <div class="card-body">
-                <h5 class="card-title"><strong>Domain:</strong> {{ question.domain }}</h5>
                 <h4 class="card-title text-primary">{{ question.title }}</h4>
-                <p><strong>Author:</strong> {{ question.author }}</p>
-                <p><strong>Comments:</strong> {{ question.comments }}</p>
                 <button class="btn btn-primary btn-sm" onclick="toggleAnswer('answer-{{ forloop.counter }}')">
                     View Answer
                 </button>

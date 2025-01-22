@@ -70,3 +70,23 @@ def Questions(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, "Questions.html", {"questions": page_obj,"search_query": search_query})
+
+
+def tags(request):
+    domain_filter = request.GET.get("domain", "")
+    search_query = request.GET.get("q", "")
+
+    filtered_questions = questions_data
+    if domain_filter:
+        filtered_questions = [q for q in filtered_questions if q["domain"] == domain_filter]
+    if search_query:
+        filtered_questions = [q for q in filtered_questions if search_query.lower() in q["title"].lower()]
+
+    paginator = Paginator(filtered_questions, 5)
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+
+    domains = sorted(set(q["domain"] for q in questions_data))
+
+    return render(request, "tags.html", {"questions": page_obj, "domains": domains, "domain_filter": domain_filter, "search_query": search_query})
+

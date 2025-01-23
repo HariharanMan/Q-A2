@@ -90,36 +90,51 @@ def signup(request):
 def login(request):
     if request.method == 'POST':
         try:
+            # Parse JSON data from the request body
             data = json.loads(request.body)
             email = data.get("email")
             password = data.get("password")
 
+            # Check if email and password are provided
             if not email or not password:
                 return JsonResponse({"error": "Email and password are required."}, status=400)
 
+            # Fetch the user from the database
             user = UsersSignup.find_one({"email": email})
 
+            # If the user is not found
             if not user:
                 return JsonResponse({"error": "User not found or email is incorrect."}, status=404)
 
+            # If the password does not match
             if user.get("password") != password:
                 return JsonResponse({"error": "Invalid password."}, status=401)
 
+            # Fetch the user's role from the database
+            role = user.get("role")
+
+            # Check if the role exists and is valid
+            if role not in ['admin', 'user']:
+                return JsonResponse({"error": "Unknown role. Please contact support."}, status=403)
+
+            # Construct the response data
             response_data = {
                 "message": "Login successful!",
                 "user": {
                     "id": str(user.get("_id")),
                     "email": user.get("email"),
-                    "role": user.get("role", "user"),
+                    "role": role,
                     "name": user.get("name"),
                 },
             }
+
             return JsonResponse(response_data, status=200)
 
         except Exception as e:
             return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
 
     return render(request, "login.html")
+
 
 @csrf_exempt
 def home(request):
@@ -179,4 +194,6 @@ def questions(request):
 def admin(request):
 
     return render(request, "adminhome.html")
+
+
 

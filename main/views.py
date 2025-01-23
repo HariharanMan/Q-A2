@@ -52,6 +52,7 @@ try:
     client = pymongo.MongoClient(MONGO_URI)
     db = client['Q&A_Platform'] 
     UsersSignup = db['UserData'] 
+    Q_A = db['Q&A']
 except Exception as e:
     raise ConnectionError(f"Failed to connect to MongoDB: {e}")
 
@@ -211,7 +212,31 @@ def adminhome(request):
 
 @csrf_exempt
 def upload(request):
-    
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            required_fields = ["Name", "email", "password", "confirmPassword"]
+            for field in required_fields:
+                if not data.get(field):
+                    return JsonResponse({"error": f"{field} is required."}, status=400)
+            if data.get("password") != data.get("confirmPassword"):
+                return JsonResponse({"error": "Passwords do not match."}, status=400)
+
+            role = 'admin' if data.get("email") == "admin@example.com" else 'user'
+
+            user_data = {
+                "name": data.get("Name"),
+                "email": data.get("email"),
+                "password": data.get("password"),
+                "role": role,
+            }
+
+            UsersSignup.insert_one(user_data)
+
+            return JsonResponse({"message": "Uploaded successfully!"}, status=201)
+
+        except Exception as e:
+            return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)
 
     return render(request, "Upload.html")
 

@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="title">Question</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Enter the Question" required>
+                <input type="text" class="form-control" id="question" name="question" placeholder="Enter the Question" required>
             </div>
             <div class="form-group">
                 <label for="answer">Answer </label>
@@ -43,22 +43,22 @@
     <script>
         document.getElementById('signupForm').addEventListener('submit', function(event) {
             event.preventDefault();
+            const domain = document.getElementById('domain').value;
             const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+            const question = document.getElementById('question').value;
+            const answer = document.getElementById('answer').value;
 
-            fetch("{% url 'signup' %}", {
+            fetch("{% url 'upload' %}", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token }}',
                 },
                 body: JSON.stringify({
-                    Name: name,
-                    email: email,
-                    password: password,
-                    confirmPassword: confirmPassword,
+                    domain: domain,
+                    name : name,
+                    question:question,
+                    answer:answer,
                 })
             })
             .then(response => response.json())

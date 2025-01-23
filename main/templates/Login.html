@@ -43,8 +43,10 @@
                 const messageDiv = document.getElementById('message');
                 if (data.error) {
                     messageDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
-                } else {
-                    window.location.href = "{% url 'home' %}";
+                } else if (userRole === "admin") {
+                    window.location.href = "{% url 'adminhome' %}"; 
+                } else if (userRole === "user") {
+                    window.location.href = "{% url 'home' %}"; 
                 }
             })
             .catch(error => {
@@ -54,3 +56,12 @@
     </script>
 </body>
 </html>
+
+
+
+if (userRole === "admin") {
+    navigate("/adminhome"); // Redirect to admin home page
+  } else if (userRole === "user") {
+    navigate("/home"); // Redirect to user home page
+  } else {
+    setError("Unknown role. Please contact support.");

@@ -5,38 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <!-- Bootstrap 4 -->
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>Signup</h1>
+    <div class="container mt-5">
+        <h2 class="text-center">Signup</h2>
         <form id="signupForm" method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
             <div class="form-group">
-                <label for="Name">Name:</label>
-                <input type="text" class="form-control" id="Name" name="Name" required>
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="Name" placeholder="Enter your name" required>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Signup</button>
+            <button type="submit" class="btn btn-primary btn-block">Signup</button>
         </form>
-        <div id="message"></div>
+
+        <div id="message" class="mt-3"></div>
     </div>
 
     <script>
         document.getElementById('signupForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            const name = document.getElementById('Name').value;
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
@@ -45,9 +47,14 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
+                    'X-CSRFToken': '{{ csrf_token }}',
                 },
-                body: JSON.stringify({ Name: name, email: email, password: password, confirmPassword: confirmPassword })
+                body: JSON.stringify({
+                    Name: name,
+                    email: email,
+                    password: password,
+                    confirmPassword: confirmPassword,
+                })
             })
             .then(response => response.json())
             .then(data => {

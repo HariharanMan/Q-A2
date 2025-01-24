@@ -52,7 +52,7 @@ try:
     client = pymongo.MongoClient(MONGO_URI)
     db = client['Q&A_Platform'] 
     UsersSignup = db['UserData'] 
-    Q_A = db['Q&A']
+    Q_A = db['questions']
 except Exception as e:
     raise ConnectionError(f"Failed to connect to MongoDB: {e}")
 
